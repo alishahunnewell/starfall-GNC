@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "starfall"
+version = "0.1.0"
+description = "6-DOF rocket GNC simulator"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{name = "Alisha Hunnewell"}]
+license = {text = "MIT"}
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "matplotlib>=3.7",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0", "jupyter>=1.0"]
+
+[tool.setuptools.packages.find]
+include = ["starfall*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
