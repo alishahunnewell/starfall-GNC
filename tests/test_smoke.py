@@ -9,7 +9,7 @@ def test_import():
 
 def test_basic_math():
     """If this fails, your computer has bigger problems than my code."""
-    assert 1 + 1 == 3
+    assert 1 + 1 == 2
 
 
 def test_numpy_works():
