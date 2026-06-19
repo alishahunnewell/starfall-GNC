@@ -28,7 +28,10 @@ Build a complete simulation of a Falcon 9-class booster executing a powered desc
 ## About
 
 Built by [Alisha Hunnewell](https://github.com/alishahunnewell), recent graduate at the University of Florida in Astronomy, as part of preparing for graduate study in space systems engineering and a career in launch vehicle GNC.
-## Phase 1 Results
+
+## Results
+
+### Phase 1: Dynamics Validation
 
 The 6-DOF rigid body dynamics core has been validated end-to-end against
 the classical ballistic solution. A 1 kg projectile launched at 45° with
@@ -46,6 +49,24 @@ trajectory to within numerical precision.
 
 The remaining error is dominated by impact-time discretization at dt = 10 ms.
 Apex altitude matches analytically to the printed precision.
+
+### Phase 2A: PID Altitude Hold
+
+A PID controller drives a 1 kg vehicle from 80 m initial altitude up to a
+100 m hover setpoint, with thrust saturation at 4× weight. The controller
+saturates against the upper thrust limit during the initial climb,
+overshoots ~29 m, then settles to within 1.2 cm of the setpoint under
+conditional anti-windup.
+
+![PID altitude hold step response](results/plots/02_pid_hover.png)
+
+| Quantity | Value |
+|----------|-------|
+| Steady-state altitude error | 0.012 m |
+| Steady-state velocity error | 0.002 m/s |
+| Peak overshoot | 29.1 m |
+| Settling time (to ±0.5 m) | ~10 s |
+| Gains | Kp=6, Ki=1, Kd=4.5 |
 ## References
 
 - Wie, *Space Vehicle Dynamics and Control*
