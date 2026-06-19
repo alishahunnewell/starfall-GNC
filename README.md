@@ -27,7 +27,7 @@ Build a complete simulation of a Falcon 9-class booster executing a powered desc
 
 ## About
 
-Built by [Alisha Hunnewell](https://github.com/alishahunnewell), graduating senior at the University of Florida, as part of preparing for graduate study in space systems engineering and a career in launch vehicle GNC.
+Built by [Alisha Hunnewell](https://github.com/alishahunnewell), recent graduate at the University of Florida in Astronomy, as part of preparing for graduate study in space systems engineering and a career in launch vehicle GNC.
 ## Phase 1 Results
 
 The 6-DOF rigid body dynamics core has been validated end-to-end against
