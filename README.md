@@ -67,6 +67,28 @@ conditional anti-windup.
 | Peak overshoot | 29.1 m |
 | Settling time (to ±0.5 m) | ~10 s |
 | Gains | Kp=6, Ki=1, Kd=4.5 |
+
+### Phase 2B: LQR Optimal Control
+
+LQR (Linear Quadratic Regulator) optimal feedback gains are derived by
+solving the continuous algebraic Riccati equation around the hover
+equilibrium. The same 80 m → 100 m hover problem is rerun, this time
+using LQR-derived gains instead of hand-tuned PID gains. The LQR
+controller outperforms PID across every metric.
+
+![PID vs LQR step response](results/plots/03_lqr_vs_pid_hover.png)
+
+| Quantity | PID | LQR |
+|----------|-----|-----|
+| Steady-state altitude error | 0.012 m | 0.000 m |
+| Peak overshoot | 29.1 m | 11.3 m |
+| Max abs error | 29.1 m | 20.0 m |
+| Final velocity | 0.002 m/s | 0.000 m/s |
+
+LQR achieves ~2.6× less overshoot, no steady-state error, and a smoother
+control signal, all derived from a quadratic cost J = ∫(x'Qx + u'Ru)dt
+with Q = diag(10, 1), R = 0.1 against the linearized hover dynamics.
+
 ## References
 
 - Wie, *Space Vehicle Dynamics and Control*
