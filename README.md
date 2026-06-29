@@ -88,7 +88,35 @@ controller outperforms PID across every metric.
 LQR achieves ~2.6× less overshoot, no steady-state error, and a smoother
 control signal, all derived from a quadratic cost J = ∫(x'Qx + u'Ru)dt
 with Q = diag(10, 1), R = 0.1 against the linearized hover dynamics.
+### Phase 2C: Convex Powered Descent Guidance
 
+The fuel-optimal landing problem is formulated as a convex optimization
+using lossless convexification (Açıkmeşe & Ploen 2007). The non-convex
+thrust magnitude constraint is replaced with a slack-variable formulation
+that the theorem guarantees is exact at optimality. CVXPY discretizes the
+problem into a 354-variable second-order cone program and solves it in
+under 100 ms.
+
+A 1500 kg vehicle starting 500 m above and 200 m downrange of the landing
+pad, with 40 m/s vertical and 10 m/s horizontal velocity, lands at the
+origin in 15 seconds while respecting a 30° glideslope cone and engine
+thrust bounds (4 kN minimum, 24 kN maximum).
+
+![Powered descent trajectory](results/plots/04_powered_descent.png)
+
+| Quantity | Value |
+|----------|-------|
+| Solver status | optimal |
+| Final position error | < 10⁻¹¹ m |
+| Final velocity error | < 10⁻¹⁰ m/s |
+| Peak thrust | 24,000 N (T_max saturation) |
+| Min thrust | 4,000 N (T_min, slack active) |
+| Bang-bang structure | max → min → max, classic fuel-optimal |
+
+The bang-bang thrust profile and the slack-bound activation at T_min are
+the visible signatures of lossless convexification at work. This is the
+same algorithm family used by SpaceX for Falcon 9 first-stage landing
+burns (Blackmore 2013).
 ## References
 
 - Wie, *Space Vehicle Dynamics and Control*
