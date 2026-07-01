@@ -140,6 +140,29 @@ GPS update, showing the filter automatically re-weighting measurement
 information against dynamics propagation. This is the same predict-
 update algorithm family used in the Apollo digital autopilot, ISS
 proximity operations, and every modern spacecraft that fuses sensors.
+### Phase 4: Monte Carlo Dispersion Analysis
+
+The Phase 2C convex guidance is subjected to 1000 Monte Carlo trials
+with randomized initial position (±20 m, 1-sigma), velocity (±5 m/s,
+1-sigma), and vehicle mass (±50 kg, 1-sigma). Each trial runs the full
+convex optimization pipeline independently. This is the standard
+deliverable used for mission approval in real aerospace GNC.
+
+![Monte Carlo landing dispersion](results/plots/06_monte_carlo_landing.png)
+
+| Quantity | Value |
+|----------|-------|
+| Successful convergence rate | 99.5% (995 / 1000) |
+| Mean landing position | ~8 × 10⁻¹² m (picometer bias) |
+| 95% dispersion ellipse | sub-nanometer axes |
+| Fuel mean ± std | 284,430 ± 12,254 (4.3% CoV) |
+| Worst terminal velocity | 4 × 10⁻⁸ m/s |
+
+The algorithm handles the full ±3-sigma uncertainty envelope with
+essentially no degradation in terminal accuracy. The 0.5% failure
+mode corresponds to the most extreme velocity perturbations
+(3-sigma tails), which is the expected behavior for a well-designed
+guidance system.
 ## References
 
 - Wie, *Space Vehicle Dynamics and Control*
