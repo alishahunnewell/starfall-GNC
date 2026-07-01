@@ -117,6 +117,29 @@ The bang-bang thrust profile and the slack-bound activation at T_min are
 the visible signatures of lossless convexification at work. This is the
 same algorithm family used by SpaceX for Falcon 9 first-stage landing
 burns (Blackmore 2013).
+### Phase 3: Extended Kalman Filter Navigation
+
+An Extended Kalman Filter fuses high-rate noisy IMU acceleration
+measurements (100 Hz) with slower GPS position measurements (10 Hz)
+to estimate altitude and vertical velocity in real time. The filter
+starts with a deliberately wrong initial guess (10 m altitude offset,
+5 m/s velocity offset) to demonstrate convergence.
+
+![EKF altitude estimation](results/plots/05_ekf_estimation.png)
+
+| Quantity | Value |
+|----------|-------|
+| Initial altitude error | -10.00 m (deliberate) |
+| Final altitude error | +0.15 m |
+| RMS altitude error | 1.28 m |
+| Initial velocity error | +5.00 m/s (deliberate) |
+| Final velocity error | +0.49 m/s |
+
+The EKF's 2-sigma uncertainty band shrinks rapidly after the first
+GPS update, showing the filter automatically re-weighting measurement
+information against dynamics propagation. This is the same predict-
+update algorithm family used in the Apollo digital autopilot, ISS
+proximity operations, and every modern spacecraft that fuses sensors.
 ## References
 
 - Wie, *Space Vehicle Dynamics and Control*
