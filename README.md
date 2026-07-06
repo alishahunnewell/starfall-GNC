@@ -2,16 +2,18 @@
 
 > A 6-DOF guidance, navigation, and control simulator for reusable launch vehicles, built from first principles.
 
+![Starfall landing demo](results/animations/07_landing_animation.gif)
+
 ## Highlights
 
-- **Full G-N-C stack from first principles** — Guidance (convex optimization), Navigation (EKF), Control (PID/LQR)
+- **Full G-N-C stack from first principles** Guidance (convex optimization), Navigation (EKF), Control (PID/LQR)
 - **6-DOF rigid body dynamics** with quaternion attitude (Hamilton convention)
 - **Convex powered descent guidance** via lossless convexification (Açıkmeşe & Ploen 2007), the same algorithm family used by Falcon 9
 - **LQR optimal control** via continuous Riccati equation, benchmarked against a hand-tuned PID
 - **Extended Kalman Filter** fusing 100 Hz IMU + 10 Hz GPS for altitude estimation
-- **Monte Carlo dispersion analysis** — 99.5% convergence rate across 1000 randomized trials
-- **All physics validated against analytical solutions** — ballistic trajectories match textbook results to <0.1% error
-- **Continuous integration** — every commit auto-tested via GitHub Actions
+- **Monte Carlo dispersion analysis**  99.5% convergence rate across 1000 randomized trials
+- **All physics validated against analytical solutions** ballistic trajectories match textbook results to <0.1% error
+- **Continuous integration** every commit auto-tested via GitHub Actions
 
 ## Quickstart
 
