@@ -2,9 +2,41 @@
 
 > A 6-DOF guidance, navigation, and control simulator for reusable launch vehicles, built from first principles.
 
-![Status](https://img.shields.io/badge/status-Phase%201%3A%20Dynamics-blue)
+## Highlights
+
+- **Full G-N-C stack from first principles** — Guidance (convex optimization), Navigation (EKF), Control (PID/LQR)
+- **6-DOF rigid body dynamics** with quaternion attitude (Hamilton convention)
+- **Convex powered descent guidance** via lossless convexification (Açıkmeşe & Ploen 2007), the same algorithm family used by Falcon 9
+- **LQR optimal control** via continuous Riccati equation, benchmarked against a hand-tuned PID
+- **Extended Kalman Filter** fusing 100 Hz IMU + 10 Hz GPS for altitude estimation
+- **Monte Carlo dispersion analysis** — 99.5% convergence rate across 1000 randomized trials
+- **All physics validated against analytical solutions** — ballistic trajectories match textbook results to <0.1% error
+- **Continuous integration** — every commit auto-tested via GitHub Actions
+
+## Quickstart
+
+```bash
+git clone https://github.com/alishahunnewell/starfall-GNC.git
+cd starfall-GNC
+python -m venv .venv
+.venv/Scripts/Activate.ps1   # Windows PowerShell
+# .venv/bin/activate         # macOS / Linux
+pip install -e ".[dev]"
+pytest -v                    # verify installation
+python scripts/04_powered_descent.py    # see the flagship plot
+```
+
+![Status](https://img.shields.io/badge/status-v1.0%20Complete-brightgreen)
 ![Python](https://img.shields.io/badge/python-3.11+-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
+
+## Technical Approach
+
+- **Language:** Python 3.11+ (numpy, scipy, matplotlib, cvxpy)
+- **Testing:** pytest with physics validation on every push (GitHub Actions CI)
+- **Architecture:** modular Python package (`starfall.dynamics`, `starfall.control`, `starfall.navigation`) with a consistent controller interface
+- **Numerical methods:** RK4 for dynamics integration; Hamilton scalar-first quaternion convention; Continuous Algebraic Riccati Equation for LQR; second-order cone programming for convex guidance; Kalman gain via Cholesky-safe linear solve
+- **Design philosophy:** validate against analytical solutions where possible, benchmark controllers against each other, characterize with Monte Carlo
 
 ## Goal
 
@@ -20,17 +52,24 @@ Build a complete simulation of a Falcon 9-class booster executing a powered desc
 
 | Phase | Topic | Status |
 |-------|-------|--------|
-| 1 | 6-DOF Rigid Body Dynamics |  In Progress |
-| 2 | Control (PID → LQR → Convex Guidance) |  Planned |
-| 3 | Navigation (EKF with IMU + GPS) |  Planned |
-| 4 | Monte Carlo & Documentation |  Planned |
-
+| 1 | 6-DOF Rigid Body Dynamics | Complete |
+| 2A | PID Control | Complete |
+| 2B | LQR Optimal Control | Complete |
+| 2C | Convex Powered Descent | Complete |
+| 3 | Extended Kalman Filter Navigation | Complete |
+| 4 | Monte Carlo Dispersion Analysis | Complete |
 ## About
 
-Built by [Alisha Hunnewell](https://github.com/alishahunnewell), recent graduate at the University of Florida in Astronomy, as part of preparing for graduate study in space systems engineering and a career in launch vehicle GNC.
+Built by [Alisha Hunnewell](https://github.com/alishahunnewell), UF Astronomy Alumni that is prepping for graduate study in space systems engineering and a career in GNC/Mission Ops Engineering.
 
 ## Results
 
+Each phase of Starfall culminates in a validated simulation and a plot. The
+results below tell a coherent engineering story: build the dynamics core,
+add successively more sophisticated controllers, close the loop with a
+navigation filter, then characterize the aggregate performance under
+uncertainty. Every algorithm is compared against analytical or numerical
+ground truth.
 ### Phase 1: Dynamics Validation
 
 The 6-DOF rigid body dynamics core has been validated end-to-end against
