@@ -84,6 +84,10 @@ def rigid_body_derivative(t, state, mass, inertia, force_inertial, moment_body):
     q_unit = quat_normalize(q)
     dq_dt = quat_kinematics(q_unit, w)
 
+#note: this is a partial renormalization that stabilizes the derivative but
+#does not stabilize actual propagated state, full renormalization can be implemented 
+#in later versions
+
     # Rotational dynamics: Euler's equation 
     # Iω is the angular momentum in the body frame. The cross product
     # ω × (Iω) gives the gyroscopic torque that arises when you express
