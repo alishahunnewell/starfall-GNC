@@ -204,6 +204,9 @@ essentially no degradation in terminal accuracy. The 0.5% failure
 mode corresponds to the most extreme velocity perturbations
 (3-sigma tails), which is the expected behavior for a well-designed
 guidance system.
+
+Phase 4B: The Phase 4 convergence rate measures whether the solver finds a feasible trajectory, not whether a vehicle would land, since the planner enforces zero terminal position and velocity as hard constraints. Phase 4B flies each planned thrust profile open loop through a plant with a 5 m and 0.5 m/s navigation error in the state given to guidance, unknown true mass (1 sigma 50 kg), and a 2% thrust magnitude error, and scores a landing only if touchdown is within 10 m of the pad at under 2 m/s vertical and 1 m/s horizontal. Under these dispersions 0 of 200 trials landed: 118 never reached the ground within the planned 15 s, 47 missed the pad, and 35 touched down too fast. This shows that feasibility is not the same as landing, and that closed-loop control with the EKF is the necessary next step. Touchdown orientation is not scored because the planner is planar and point-mass.
+
 ## References
 
 - Wie, *Space Vehicle Dynamics and Control*
